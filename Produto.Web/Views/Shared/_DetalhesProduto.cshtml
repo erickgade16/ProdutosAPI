@@ -1,0 +1,35 @@
+﻿<div class="modal fade" id="detalhesProdutoModal" tabindex="-1" aria-labelledby="detalhesProdutoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detalhesProdutoModalLabel">@Model.Nome</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <img src="@Model.ImagemUrl" alt="@Model.Nome" class="img-fluid mb-2 produto-imagem-centralizada" />
+                </div>
+                <div class="text-center">
+                    <strong style="font-size: 1.2em;">Descrição</strong>
+                    <p>@Model.Descricao</p>
+                    <strong>Preço: R$ @String.Format("{0:N2}", Model.Preco)</strong>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .produto-imagem-centralizada {
+        max-width: 100%;
+        height: auto;
+        width: 300px; /* Define a largura fixa */
+        height: auto; /* Define a altura fixa */
+        object-fit: cover; /* Garante que a imagem se ajuste às dimensões mantendo a proporção */
+    }
+
+</style>

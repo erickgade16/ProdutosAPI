@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ProdutoViewModel>
+
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+<h1>Produtos</h1>
+
+<form method="get" asp-controller="Produto" asp-action="Index" class="form-inline my-2 my-lg-0 search-form">
+    <input class="form-control mr-2 form-control-lg search-input" type="text" name="searchString" placeholder="Pesquisar por nome ou descrição" aria-label="Pesquisar" />
+    <button class="btn btn-primary search-button" type="submit">Pesquisar</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Imagem</th>
+            <th>Nome</th>
+            <th>Descrição Curta</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var produto in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@produto.ImagemUrl" alt="@produto.Nome" class="produto-imagem-pequena" />
+                </td>
+                <td>@produto.Nome</td>
+                <td>@produto.DescricaoCurta</td>
+                <td>
+                    <button type="button" class="btn btn-primary detalhes-produto-btn" data-produto-id="@produto.Id">
+                        Ver Detalhes
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal para detalhes do produto -->
+<div id="modalContainer"></div>
+<!--css-->
+<style>
+    .search-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .search-input {
+        width: 50%;
+    }
+
+    .search-button {
+        padding: 5px 10px; 
+        font-size: 1rem; 
+        margin-left: 10px;
+    }
+
+    .produto-imagem-pequena {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+    }
+</style>
+
+<!-- Scripts -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.detalhes-produto-btn').on('click', function () {
+            var produtoId = $(this).data('produto-id');
+            $.ajax({
+                url: '@Url.Action("Detalhes", "Produto")',
+                type: 'GET',
+                data: { id: produtoId },
+                success: function (result) {
+                    $('#modalContainer').html(result);
+                    $('#detalhesProdutoModal').modal('show');
+                }
+            });
+        });
+    });
+</script>
